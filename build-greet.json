@@ -1,0 +1,185 @@
+{
+    "apiVersion": "build.openshift.io/v1",
+    "kind": "Build",
+    "metadata": {
+        "annotations": {
+            "openshift.io/build-config.name": "greet",
+            "openshift.io/build.number": "1",
+            "openshift.io/build.pod-name": "greet-1-build"
+        },
+        "creationTimestamp": "2023-03-06T07:22:27Z",
+        "generation": 2,
+        "labels": {
+            "app": "greet",
+            "app.kubernetes.io/component": "greet",
+            "app.kubernetes.io/instance": "greet",
+            "buildconfig": "greet",
+            "openshift.io/build-config.name": "greet",
+            "openshift.io/build.start-policy": "Serial"
+        },
+        "name": "greet-1",
+        "namespace": "developer-source-build",
+        "ownerReferences": [
+            {
+                "apiVersion": "build.openshift.io/v1",
+                "controller": true,
+                "kind": "BuildConfig",
+                "name": "greet",
+                "uid": "c1909cba-eaee-41a1-af34-f4f36e08383c"
+            }
+        ],
+        "resourceVersion": "167109",
+        "uid": "9d1327b9-259c-41c9-b3ca-c53ba7128d36"
+    },
+    "spec": {
+        "nodeSelector": null,
+        "output": {
+            "pushSecret": {
+                "name": "builder-dockercfg-dp96c"
+            },
+            "to": {
+                "kind": "ImageStreamTag",
+                "name": "greet:latest"
+            }
+        },
+        "postCommit": {},
+        "resources": {},
+        "revision": {
+            "git": {
+                "author": {
+                    "email": "alexcorcoles@redhat.com",
+                    "name": "Alex Corcoles"
+                },
+                "commit": "5dcc01b9a4babb847a91608666e5277a3cdef92a",
+                "committer": {
+                    "email": "alex@corcoles.net",
+                    "name": "Alex Corcoles"
+                },
+                "message": "Use Thorntail 2.4.0"
+            },
+            "type": "Git"
+        },
+        "serviceAccount": "builder",
+        "source": {
+            "contextDir": "nodejs-helloworld",
+            "git": {
+                "ref": "source-build",
+                "uri": "https://github.com/klauxx9/DO288-apps"
+            },
+            "type": "Git"
+        },
+        "strategy": {
+            "sourceStrategy": {
+                "env": [
+                    {
+                        "name": "npm_config_registry",
+                        "value": "http://nexus-common.apps.ap410.prod.ole.redhat.com/repository/nodejs"
+                    }
+                ],
+                "from": {
+                    "kind": "DockerImage",
+                    "name": "image-registry.openshift-image-registry.svc:5000/openshift/nodejs@sha256:2c887de42d9d1f4a980e2020e13fbf8d01f236f6bbc3cac534da04d06f70eb44"
+                },
+                "pullSecret": {
+                    "name": "builder-dockercfg-dp96c"
+                }
+            },
+            "type": "Source"
+        },
+        "triggeredBy": [
+            {
+                "imageChangeBuild": {
+                    "fromRef": {
+                        "kind": "ImageStreamTag",
+                        "name": "nodejs:16-ubi8",
+                        "namespace": "openshift"
+                    },
+                    "imageID": "image-registry.openshift-image-registry.svc:5000/openshift/nodejs@sha256:2c887de42d9d1f4a980e2020e13fbf8d01f236f6bbc3cac534da04d06f70eb44"
+                },
+                "message": "Image change"
+            }
+        ]
+    },
+    "status": {
+        "completionTimestamp": "2023-03-06T07:23:09Z",
+        "conditions": [
+            {
+                "lastTransitionTime": "2023-03-06T07:22:27Z",
+                "lastUpdateTime": "2023-03-06T07:22:27Z",
+                "status": "False",
+                "type": "New"
+            },
+            {
+                "lastTransitionTime": "2023-03-06T07:22:29Z",
+                "lastUpdateTime": "2023-03-06T07:22:29Z",
+                "status": "False",
+                "type": "Pending"
+            },
+            {
+                "lastTransitionTime": "2023-03-06T07:23:09Z",
+                "lastUpdateTime": "2023-03-06T07:23:09Z",
+                "status": "False",
+                "type": "Running"
+            },
+            {
+                "lastTransitionTime": "2023-03-06T07:23:09Z",
+                "lastUpdateTime": "2023-03-06T07:23:09Z",
+                "message": "Generic Build failure - check logs for details.",
+                "reason": "GenericBuildFailed",
+                "status": "True",
+                "type": "Failed"
+            }
+        ],
+        "config": {
+            "kind": "BuildConfig",
+            "name": "greet",
+            "namespace": "developer-source-build"
+        },
+        "duration": 42000000000,
+        "logSnippet": "npm ERR! JSON.parse Note: package.json must be actual JSON, not just JavaScript.\n\nnpm ERR! A complete log of this run can be found in:\nnpm ERR!     /opt/app-root/src/.npm/_logs/2023-03-06T07_23_06_780Z-debug-0.log\nerror: build error: error building at STEP \"RUN /usr/libexec/s2i/assemble\": error while running runtime: exit status 1",
+        "message": "Generic Build failure - check logs for details.",
+        "output": {},
+        "outputDockerImageReference": "image-registry.openshift-image-registry.svc:5000/developer-source-build/greet:latest",
+        "phase": "Failed",
+        "reason": "GenericBuildFailed",
+        "stages": [
+            {
+                "durationMilliseconds": 11061,
+                "name": "FetchInputs",
+                "startTime": "2023-03-06T07:22:35Z",
+                "steps": [
+                    {
+                        "durationMilliseconds": 11061,
+                        "name": "FetchGitSource",
+                        "startTime": "2023-03-06T07:22:35Z"
+                    }
+                ]
+            },
+            {
+                "durationMilliseconds": 14539,
+                "name": "PullImages",
+                "startTime": "2023-03-06T07:22:50Z",
+                "steps": [
+                    {
+                        "durationMilliseconds": 14539,
+                        "name": "PullBaseImage",
+                        "startTime": "2023-03-06T07:22:50Z"
+                    }
+                ]
+            },
+            {
+                "durationMilliseconds": 4962,
+                "name": "Build",
+                "startTime": "2023-03-06T07:23:04Z",
+                "steps": [
+                    {
+                        "durationMilliseconds": 4962,
+                        "name": "DockerBuild",
+                        "startTime": "2023-03-06T07:23:04Z"
+                    }
+                ]
+            }
+        ],
+        "startTimestamp": "2023-03-06T07:22:27Z"
+    }
+}
